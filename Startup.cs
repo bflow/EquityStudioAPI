@@ -10,8 +10,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using Swashbuckle.AspNetCore;
 
-namespace FreeFlowAPI
+
+
+namespace EquityStudioAPI
 {
     public class Startup
     {
@@ -36,8 +41,22 @@ namespace FreeFlowAPI
             services.AddHttpClient("iex", c =>
             {
                 c.BaseAddress = new Uri("https://sandbox.iexapis.com/stable/");
-                //c.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
-                //c.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactory-Sample");
+            });
+            services.AddHttpClient("quandl", c =>
+            {
+                c.BaseAddress = new Uri("https://www.quandl.com/api/v3/datasets/");
+            });
+            services.AddHttpClient("alphavantage", c =>
+            {
+                c.BaseAddress = new Uri("https://www.alphavantage.co/query");
+            });
+            services.AddHttpClient("finbox", c =>
+            {
+                c.BaseAddress = new Uri("https://api.finbox.io/beta/data/");
+            });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Equity Studio Finanical Data API", Version = "v0.5b" });
             });
 
         }
@@ -54,6 +73,16 @@ namespace FreeFlowAPI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "EquityStudioAPI v0.5b");
+            });
 
             app.UseHttpsRedirection();
             app.UseMvc();
