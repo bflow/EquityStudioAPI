@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading;
 using EquityStudioAPI.Utilities;
+using Microsoft.Extensions.Configuration;
 
 namespace EquityStudioAPI.Controllers
 {
@@ -18,19 +19,22 @@ namespace EquityStudioAPI.Controllers
     {
        
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _configuration;
 
-        public AlphaVantage(IHttpClientFactory httpClientFactory)
+        public AlphaVantage(IHttpClientFactory httpClientFactory, IConfiguration config)
         {
-            _httpClientFactory = httpClientFactory; 
+            _httpClientFactory = httpClientFactory;
+            _configuration = config;
         }
 
         // GET api/AlphaVantage
         [HttpGet("{function}")]
-        public async Task<ActionResult> GetAlphaVObject(string function = "sector", string apikey = "demo")
+        public async Task<ActionResult> GetAlphaVObject(string function = "sector")
         {
-            string getUrl = "?function=" + function + "&apikey=" + apikey;
+            string getUrl = "?function=" + function + "&apikey=" + _configuration["API:AlphaVantage:Token"];
+            string client = _configuration["API:AlphaVantage:Client"];
 
-            return Ok(await Helpers.GetJson<SectorPerformance>(getUrl, "alphavantage", _httpClientFactory));
+            return Ok(await Helpers.GetJson<SectorPerformance>(getUrl, client, _httpClientFactory));
         }
     }
 }
