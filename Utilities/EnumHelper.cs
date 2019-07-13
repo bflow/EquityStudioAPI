@@ -6,7 +6,6 @@ using System.IO.Enumeration;
 
 namespace EquityStudioAPI.Utilities
 {
-    
     public enum FinboxObject
     {
         price_to_sales_ltm,
@@ -49,8 +48,6 @@ namespace EquityStudioAPI.Utilities
     };
     public static partial class Helpers
     {
-        
-
         public static string CleanString(string s, string c)
         {
             if (s.IndexOf(c) >= 0) s = s.Remove(s.IndexOf(c), 1);
