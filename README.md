@@ -7,10 +7,10 @@
 
 ## Project Goals
 - Build a consolidated API serving JSON objects from various financial data providers including: 
-  -[IEX Cloud](https://iexcloud.io/docs/api/) 
-  -[Quandl](https://www.quandl.com/search?filters=%5B%22Free%22%5D)
-  -[Finbox.io](https://finbox.com/)
-  -[Alpha Vantage](https://www.alphavantage.co/documentation/)
+  - [IEX Cloud](https://iexcloud.io/docs/api/) 
+  - [Quandl](https://www.quandl.com/search?filters=%5B%22Free%22%5D)
+  - [Finbox.io](https://finbox.com/)
+  - [Alpha Vantage](https://www.alphavantage.co/documentation/)
 
 ## Using the API
 **_Summary:_** 
