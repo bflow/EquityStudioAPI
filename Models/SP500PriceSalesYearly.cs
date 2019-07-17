@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -66,7 +67,7 @@ namespace EquityStudioAPI.Models
         public DateTimeOffset EndDate { get; set; }
 
         [JsonProperty("data")]
-        public List<List<Datum>> Data { get; set; }
+        public List<List<string>> Data { get; set; }
 
         [JsonProperty("collapse")]
         public dynamic Collapse { get; set; }
@@ -76,14 +77,5 @@ namespace EquityStudioAPI.Models
 
         [JsonProperty("database_id")]
         public long DatabaseId { get; set; }
-    }
-
-    public partial struct PriceSalesDatum
-    {
-        public DateTimeOffset? DateTime;
-        public double? Double;
-
-        public static implicit operator PriceSalesDatum(DateTimeOffset DateTime) => new PriceSalesDatum { DateTime = DateTime };
-        public static implicit operator PriceSalesDatum(double Double) => new PriceSalesDatum { Double = Double };
     }
 }

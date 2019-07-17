@@ -66,7 +66,7 @@ namespace EquityStudioAPI.Models
         public DateTimeOffset EndDate { get; set; }
 
         [JsonProperty("data")]
-        public List<List<TBillYieldDatum>> Data { get; set; }
+        public List<List<string>> Data { get; set; }
 
         [JsonProperty("collapse")]
         public dynamic Collapse { get; set; }
@@ -76,15 +76,5 @@ namespace EquityStudioAPI.Models
 
         [JsonProperty("database_id")]
         public long DatabaseId { get; set; }
-    }
-
-    public partial struct TBillYieldDatum
-    {
-        public DateTimeOffset? DateTime;
-        public double? Double;
-
-        public static implicit operator TBillYieldDatum(DateTimeOffset DateTime) => new TBillYieldDatum { DateTime = DateTime };
-        public static implicit operator TBillYieldDatum(double Double) => new TBillYieldDatum { Double = Double };
-        public bool IsNull => DateTime == null && Double == null;
     }
 }

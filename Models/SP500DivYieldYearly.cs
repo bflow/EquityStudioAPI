@@ -66,7 +66,7 @@ namespace EquityStudioAPI.Models
         public DateTimeOffset EndDate { get; set; }
 
         [JsonProperty("data")]
-        public List<List<Datum>> Data { get; set; }
+        public List<List<string>> Data { get; set; }
 
         [JsonProperty("collapse")]
         public dynamic Collapse { get; set; }
@@ -76,14 +76,5 @@ namespace EquityStudioAPI.Models
 
         [JsonProperty("database_id")]
         public long DatabaseId { get; set; }
-    }
-
-    public partial struct Datum
-    {
-        public DateTimeOffset? DateTime;
-        public double? Double;
-
-        public static implicit operator Datum(DateTimeOffset DateTime) => new Datum { DateTime = DateTime };
-        public static implicit operator Datum(double Double) => new Datum { Double = Double };
     }
 }
