@@ -15,12 +15,17 @@ namespace EquityStudioAPI.Utilities
             using (var client = clientFactory.CreateClient(apiVendor))
             using (var response = await client.GetAsync(url))
             {
-                response.EnsureSuccessStatusCode();
+                
                 var json_data = await response.Content.ReadAsStringAsync();
 
                 // if string with JSON data is not empty, deserialize it to class and return its instance 
                 return !string.IsNullOrEmpty(json_data) ? JsonConvert.DeserializeObject<T>(json_data, serializerSettings) : new T();
             }
-        }  
+        } 
+        
+        public class ApiException  : Exception
+        {
+
+        }
     }
 }

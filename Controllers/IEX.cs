@@ -22,9 +22,9 @@ namespace EquityStudioAPI.Controllers
 
         // GET api/IEX
         [HttpGet("{symbol}/{function}")]
-        public async Task<ActionResult> GetIEXObject(string symbol, string function)
-        {
-            string getUrl = "stock/" + symbol + "/" + function + "?token=" + _configuration["API:IEXSandbox:Token"];
+        public async Task<ActionResult> GetIEXObject(string symbol, string function, string apiToken = null)
+        { 
+            string getUrl = "stock/" + symbol + "/" + function + "?token=" + (apiToken ?? _configuration["API:IEXSandbox:Token"]);
             string client = _configuration["API:IEXSandbox:Client"];
             IexObject iex = Helpers.SelectEnum(function, new IexObject());
 

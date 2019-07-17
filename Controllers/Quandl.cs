@@ -26,10 +26,10 @@ namespace EquityStudioAPI.Controllers
         }
 
         // GET api/Quandl
-        [HttpGet("{symbol}/{function}")]
-        public async Task<ActionResult> GetQuandlObject(string function, string symbol = "MULTPL")
+        [HttpGet("{function}")]
+        public async Task<ActionResult> GetQuandlObject(string route, string function, string apiToken)
         {
-            string getUrl = symbol + "/" + function + ".json?api_key=" + _configuration["API:Quandl:Token"];
+            string getUrl = (route ?? _configuration["API:Quandl:DefaultRoute"]) + "/" + function + ".json?api_key=" + (apiToken ??_configuration["API:Quandl:Token"]);
             string client = _configuration["API:Quandl:Client"];
             QuandlObject quandl = Helpers.SelectEnum(function, new QuandlObject());
             
