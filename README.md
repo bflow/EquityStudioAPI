@@ -1,5 +1,5 @@
 # Equity Studio API
-
+[![Build Status](https://dev.azure.com/flowersbenjamin/EquityStudioAPI/_apis/build/status/bflow.EquityStudioAPI?branchName=master)](https://dev.azure.com/flowersbenjamin/EquityStudioAPI/_build/latest?definitionId=1&branchName=master)
 ## Project Info
 - Built with [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-2.2) 
 - Hosted on Heroku with .NET Core buildpack: https://equitystudioapi.herokuapp.com/swagger
