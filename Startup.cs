@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.WsFederation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.Authentication;
 
 namespace EquityStudioAPI
 {
@@ -20,6 +23,20 @@ namespace EquityStudioAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(o =>
+            {
+                o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                o.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = WsFederationDefaults.AuthenticationScheme;
+            })
+            .AddWsFederation(o =>
+            {
+                o.Wtrealm = "api://5006ad8e-908e-4d0e-b24e-e486985b86e7";
+                o.MetadataAddress = "https://login.microsoftonline.com/e38abc00-3580-438b-8571-484d11b42eb5/federationmetadata/2007-06/federationmetadata.xml";
+
+            })
+            .AddCookie();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddHttpClient();
@@ -63,6 +80,19 @@ namespace EquityStudioAPI
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
+            app.Use(async (context, next) =>
+            {
+                
+                if (!context.User.Identity.IsAuthenticated && context.Request.Path != "/signin-wsfed")
+                {
+                    await context.ChallengeAsync(WsFederationDefaults.AuthenticationScheme);
+                }
+                else
+                {
+                    await next();
+                }
+            });
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 

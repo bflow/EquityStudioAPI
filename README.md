@@ -14,4 +14,4 @@
 
 ## Using the API
 **_Summary:_** 
-This API offers endpoints for consuming company financial data, US Treasury data, and S&P500 data
+This API offers endpoints for consuming company financial data, US Treasury data, and S&P500 data.
